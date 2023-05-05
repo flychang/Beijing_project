@@ -2,8 +2,8 @@ import cv2
 
 import math
 
-mx = 0
-my = 0
+mx = 0.0
+my = 0.0
 radius0 = 70
 radius1 = 80
 cx = 82
