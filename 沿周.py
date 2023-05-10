@@ -89,3 +89,22 @@ def get_mouse_pos(event, x, y, flags, param):
             x1, y1, x2, y2 = get_cercle(rcx, rcy)
             # 大图坐标转小图坐标，调用亿力的函数
             flag, width = MouseMinWidth.MouseMinWidthInRing(x2 - 1142, y2 - 96, x1 - 1142, y1 - 96, xiaoright)
+         # 画线
+        cv2.line(img_draw, (x1, y1), (x2, y2), (0, 255, 0), 3)
+        # draw.line([(x1, y1), (x2, y2)],fill=(0,255,0),width=3)
+        # 在图片上添加文本
+        font = cv2.FONT_HERSHEY_SIMPLEX  # 字体类型
+        text0 = 'flag:'  # flag
+        # print(type(text0))
+        # text0.encode("GBK").decode("UTF-8", errors="ignore")
+        text1 = str(flag)  # flag
+        text2 = str(width)  # 一条线上有几个合格
+        text3 = "widt:"
+        color = (255, 255, 255)  # BGR 格式颜色
+        thickness = 1  # 粗细
+        font_scale = 0.8  # 字体大小
+        text_size0, _ = cv2.getTextSize(text0, font, font_scale, thickness)
+        text_size1, _ = cv2.getTextSize(text1, font, font_scale, thickness)
+        text_size2, _ = cv2.getTextSize(text2, font, font_scale, thickness)
+        text_size3, _ = cv2.getTextSize(text3, font, font_scale, thickness)
+        # text_size[0] text长度，text_size[1] text高度
