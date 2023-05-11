@@ -108,3 +108,22 @@ def get_mouse_pos(event, x, y, flags, param):
         text_size2, _ = cv2.getTextSize(text2, font, font_scale, thickness)
         text_size3, _ = cv2.getTextSize(text3, font, font_scale, thickness)
         # text_size[0] text长度，text_size[1] text高度
+        # 写字上部
+        if 0 < my <= rcy:
+            # 写字，右侧半圆上部
+            if mx > rcx:
+                if text_size2[0] + x2 > width - rcx:
+                    # 第一个汉字语句
+                    cv2.putText(img_draw, text0, (x1 - text_size2[0] - text_size0[0], y1 + text_size2[1]), font,
+                                font_scale, color,
+                                thickness)
+                    # 数据1
+                    cv2.putText(img_draw, text1, (x1 - text_size2[0], y1 + text_size2[1]), font, font_scale, color,
+                                thickness)
+                    # 数据2
+                    cv2.putText(img_draw, text2, (x1 - text_size2[0], y1 + 2 * text_size2[1]), font, font_scale, color,
+                                thickness)
+                    # 第二个汉字语句
+                    cv2.putText(img_draw, text3, (x1 - text_size2[0] - text_size3[0], y1 + 2 * text_size2[1]), font,
+                                font_scale, color,
+                                thickness)
