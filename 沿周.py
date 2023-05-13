@@ -146,3 +146,13 @@ def get_mouse_pos(event, x, y, flags, param):
                         thickness)
             cv2.putText(img_draw, text3, (x1, y1 + 2 * text_size2[1]), font, font_scale, color,
                         thickness)
+        # 写字，中间条形上部
+        if lcx <= mx <= rcx:
+            # draw.text((x1 - text_size2[0] - text_size0[0], y1 + text_size2[1]), text0, font=font,
+            #           fill=(255, 255, 255))
+            cv2.putText(img_draw, text0, (x1 - text_size0[0], y1 - text_size2[1] + trim_upup), font, font_scale,
+                        color,
+                        thickness)
+            cv2.putText(img_draw, text1, (x1, y1 - text_size2[1] + trim_upup), font, font_scale, color, thickness)
+            cv2.putText(img_draw, text2, (x1, y1 + trim_up), font, font_scale, color, thickness)
+            cv2.putText(img_draw, text3, (x1 - text_size3[0], y1 + trim_up), font, font_scale, color, thickness)
