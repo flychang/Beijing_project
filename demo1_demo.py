@@ -190,8 +190,7 @@ class Ui_mainWindow(object):
         self.pushButton_3.setText(_translate("mainWindow", "导入图片"))
         self.pushButton_4.setText(_translate("mainWindow", "一键检测"))
         self.pushButton_7.setText(_translate("mainWindow", "结果存放"))
-        self.label_3.setText(_translate("mainWindow", "abel333333333333333333"))
-        self.label_4.setText(_translate("mainWindow", "Label444444444444444"))
+      
 
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
         self.pushButton_2.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
@@ -272,20 +271,3 @@ class Ui_mainWindow(object):
         else:
             a = self.Comboxreturn()
             print(a)
-
-    # def mouseMoveEvent(self, event: QMouseEvent):
-    #     if not self.pixmap():
-    #         return
-    #
-    #     # 获取图像的大小和部件的大小
-    #     image_size = self.pixmap().size()
-    #     widget_size = self.size()
-    #
-    #     # 计算图像缩放比例
-    #     scale_factor = min(widget_size.width() / image_size.width(),
-    #                        widget_size.height() / image_size.height())
-    #
-    #     # 计算鼠标在图像上的坐标
-    #     image_pos = event.pos() / scale_factor
-    #
-    #     print(f"Mouse position on image: ({image_pos.x()}, {image_pos.y()})")
