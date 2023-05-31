@@ -184,6 +184,76 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(self.Pushbutton4)
         self.pushButton_3.clicked.connect(self.msg3)
 
+    def jiance(self):
+        self.pushButton_jiance.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+        """ 销毁 QLabel """
+        self.label_4.deleteLater()  # 使用 deleteLater 方法销毁 QLabel
+
+    def keshihua(self):
+        self.pushButton_keshihua.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
+        # 生成一个透明label--label_4
+        self.label_4 = MyLabel(self.centralwidget)
+        self.label_4.setStyleSheet("background-color:transparent;")  # 设置背景透明
+        self.label_4.setAttribute(Qt.WA_TranslucentBackground)  # 启用透明度特性
+        self.label_4.setGeometry(QtCore.QRect(sut_width, 0, 1501, 1101))
+        # self.label_4.setText("Label444444444444444444")
+        self.label_4.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
+        self.label_4.setMouseTracking(True)
+        self.label_4.setObjectName("label_4")
+
+        self.label_4.raise_()
+        self.label_4.show()
+        print("走到这了")
+        print("算法num：", self.Comboxreturn())
+
+    def msg(self):
+        num = 0
+        self.imgName, imgType = QtWidgets.QFileDialog.getOpenFileName(None, "导入图片", "./", "*.png;*.tif;")
+        # imgName, imgType = QtWidgets.QFileDialog.getOpenFileName(None, "选取文件", "./","All Files (*);;Text Files (*.txt)")
+        self.pushButton_5.setText(self.imgName)
+        if self.imgName == "":
+            return
+        file_path = self.imgName
+        # img = Image.open(file_path)
+        img = cv2.imread(file_path, 1)
+        row, col, s = img.shape  # 大小/尺寸
+        # w = col  # 图片的宽
+        # h = row  # 图片的高
+        # print(w,h,f)
+        img_rate = float(col / row)  # 图片长宽比
+        lable_rate = float(self.label_3.width() / self.label_3.height())  # label长宽比
+
+        """if lable_rate > img_rate:
+            jpg = QtGui.QPixmap(self.imgName).scaled(self.label_3.height() / row * col, self.label_3.height())
+            print(self.label_3.height() / row * col, self.label_3.height())
+        else:
+            jpg = QtGui.QPixmap(self.imgName).scaled(self.label_3.width(), self.label_3.width() / col * row)
+            print(self.label_3.width(), self.label_3.width() / col * row)"""
+        # 原始尺寸输出
+        jpg = QtGui.QPixmap(self.imgName)
+        print(self.label_3.width(), self.label_3.height())  # 控制台输出label长度和宽度
+        print(col, row)  # 控制台输出图片的长度和宽度
+
+        pixmap = QtGui.QPixmap(jpg)
+        #
+        # painter = QtGui.QPainter(pixmap)
+        # # 设置线条颜色和宽度
+        # pen = QtGui.QPen(QtGui.QColor(255, 0, 0))
+        # pen.setWidth(3)
+        # painter.setPen(pen)
+        # # self.mouseMoveEvent()
+        # # 在 QPixmap 上画线
+        # painter.drawLine(0, 0, 100, 100)
+        #
+        # # 结束绘制
+        # painter.end()
+        # 将 QPixmap 设置为 self.label_3 的 pixmap
+        self.label_3.setPixmap(pixmap)
+        # self.label_3.setPixmap(jpg)                                         #在label_3处展示等比例缩放后的图片
+        # self.mid(self,imgName)
+
+        # 结果保存路径路径
+
    
 
 if __name__ == '__main__':
