@@ -254,7 +254,44 @@ class Ui_MainWindow(object):
 
         # 结果保存路径路径
 
-   
+    def msg2(self):
+        self.directory2 = QtWidgets.QFileDialog.getExistingDirectory(None, "选取文件夹", "C:/")
+        self.pushButton_4.setText(self.directory2)
+
+        # 根据选择的器件返回不同值函数
+
+    def msg3(self):
+        self.txtName, imgType = QtWidgets.QFileDialog.getOpenFileName(None, "导入图片", "./", "*.txt;")
+        self.pushButton_6.setText(self.txtName)
+
+    def Comboxreturn(self):
+
+        global algorithm_num
+        data = self.comboBox.currentText()
+        if data == "LSR16C-1100-上冷板分组件-密封座":
+            algorithm_num = 0
+        elif data == "LSR16C-1100-上冷板分组件-外围钎焊":
+            algorithm_num = 1
+        elif data == "LSR16C-2000-下冷板分组件-外围钎焊":
+            algorithm_num = 2
+        elif data == "IGBT散热器-正方形":
+            algorithm_num = 3
+        elif data == "IGBT散热器-八角形":
+            algorithm_num = 4
+        return algorithm_num
+
+        # 判断是否设置文件夹、导入图片    返回后台检测器件型号
+
+    def Pushbutton4(self):
+        if self.imgName == "" or self.directory2 == "" or self.txtName == "":
+            msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, '警告',
+                                            '请先导入图片和txt文件或设置结果存放的文件夹！')  # Information可替换为Warning、Critical其他提示框类型
+            msg_box.exec_()
+        else:
+            # a = self.Comboxreturn()
+            # print(a)
+            print("算法返回值：",self.Comboxreturn())
+
 
 if __name__ == '__main__':
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
