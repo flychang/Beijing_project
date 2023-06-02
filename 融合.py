@@ -291,6 +291,105 @@ class Ui_MainWindow(object):
             # a = self.Comboxreturn()
             # print(a)
             print("算法返回值：",self.Comboxreturn())
+class MyLabel(QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.mx = 0
+        self.my = 0
+        self.radius0 = 86
+        self.radius1 = 104
+        self.lcx = 106
+        self.lcy = 150
+        self.rcx = 1017
+        self.rcy = 150
+        self.y2 = None
+        self.x2 = None
+        self.y1 = None
+        self.x1 = None
+        self.b = None
+        self.a = None
+        self.lcx = int(self.lcx + (1501 - img.shape[1]) / 2)
+
+        self.lcy = int(self.lcy + (1101 - img.shape[0]) / 2)
+        self.rcx = int(self.rcx + (1501 - img.shape[1]) / 2)
+        self.rcy = int(self.rcy + (1101 - img.shape[0]) / 2)
+        print("Mylabel到此一游")
+        self.setMouseTracking(True)
+
+    def mouseMoveEvent(self, event):
+        self.mx = event.x()
+        self.my = event.y()
+        self.update()
+        print(self.mx, self.my)
+
+    def get_circle(self, cx, cy):
+        print("cx,cy=", cx, cy)
+        angle_rad = math.atan2(cy - self.my, self.mx - cx)
+        if angle_rad >= 0:
+            angle_rad1 = angle_rad
+        else:
+            angle_rad1 = angle_rad + 2 * math.pi
+        y2 = int(cy - (self.radius1 * math.sin(angle_rad1)))
+        x2 = int(cx + (self.radius1 * math.cos(angle_rad1)))
+        y1 = int(cy - (self.radius0 * math.sin(angle_rad1)))
+        x1 = int(cx + (self.radius0 * math.cos(angle_rad1)))
+        print("圆内结果：", (x1, y1), (x2, y2))
+        return x1, y1, x2, y2
+
+    def compute(self, mx, my):
+        global x1, y1, y2, x2
+        if self.lcx >= mx >= 0:
+            x1, y1, x2, y2 = self.get_circle(self.lcx, self.lcy)
+            flag, width = MouseMinWidth.MouseMinWidthInRing(x2 - (self.lcx - self.radius1),
+                                                            y2 - (self.lcy - self.radius1) + piancha,
+                                                            x1 - (self.lcx - self.radius1),
+                                                            y1 - (self.lcy - self.radius1) + piancha, xiaoleft)
+        if self.lcx < mx < self.rcx and 0 < my <= self.rcy:
+            x1 = x2 = mx
+            y1 = self.lcy - self.radius1
+            y2 = self.lcy - self.radius0
+            xx = x1 - self.lcx
+            flag, width = MouseMinWidth.MouseMinWidthInLine(xx, xiaoup)
+        if self.lcx < mx < self.rcx and my > self.rcy:
+            x1 = x2 = mx
+            y1 = self.lcy + self.radius1 + piancha
+            y2 = self.lcy + self.radius0 + piancha
+            xx = x1 - self.lcx
+            flag, width = MouseMinWidth.MouseMinWidthInLine(xx, xiaodown)
+        if mx >= self.rcx:
+            x1, y1, x2, y2 = self.get_circle(self.rcx, self.rcy)
+            flag, width = MouseMinWidth.MouseMinWidthInRing(x2 - self.rcx, y2 - (self.lcy - self.radius1) + piancha,
+                                                            x1 - self.rcx, y1 - (self.lcy - self.radius1) + piancha,
+                                                            xiaoright)
+        return x1, y1, x2, y2
+
+    print("画画的")
+
+    def paintEvent(self, event):
+        global algorithm_num
+        window_pos = self.pos()
+        painter = QPainter(self)
+        pen = QPen(Qt.red, 2)
+        painter.setPen(pen)
+        self.a = self.mx
+        self.b = self.my
+        self.x1, self.y1, self.x2, self.y2 = self.compute(self.a, self.b)
+        # print("Ui_MainWindow.a:", Ui_MainWindow.a)
+        if algorithm_num == 2:
+            painter.drawLine(int(self.lcx - 1),
+                             int(self.lcy - 1),
+                             int(self.lcx + 1),
+                             int(self.lcy + 1))
+            painter.drawLine(int(self.rcx - 1),
+                             int(self.rcy - 1),
+                             int(self.rcx + 1),
+                             int(self.rcy + 1))
+
+            painter.drawLine(int(self.x1), int(self.y1),
+                             int(self.x2), int(self.y2))
+
+
+
 
 
 if __name__ == '__main__':
