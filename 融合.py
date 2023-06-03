@@ -313,7 +313,7 @@ class MyLabel(QLabel):
         self.lcy = int(self.lcy + (1101 - img.shape[0]) / 2)
         self.rcx = int(self.rcx + (1501 - img.shape[1]) / 2)
         self.rcy = int(self.rcy + (1101 - img.shape[0]) / 2)
-        print("Mylabel到此一游")
+
         self.setMouseTracking(True)
 
     def mouseMoveEvent(self, event):
@@ -323,7 +323,7 @@ class MyLabel(QLabel):
         print(self.mx, self.my)
 
     def get_circle(self, cx, cy):
-        print("cx,cy=", cx, cy)
+    
         angle_rad = math.atan2(cy - self.my, self.mx - cx)
         if angle_rad >= 0:
             angle_rad1 = angle_rad
@@ -333,7 +333,7 @@ class MyLabel(QLabel):
         x2 = int(cx + (self.radius1 * math.cos(angle_rad1)))
         y1 = int(cy - (self.radius0 * math.sin(angle_rad1)))
         x1 = int(cx + (self.radius0 * math.cos(angle_rad1)))
-        print("圆内结果：", (x1, y1), (x2, y2))
+
         return x1, y1, x2, y2
 
     def compute(self, mx, my):
@@ -363,7 +363,6 @@ class MyLabel(QLabel):
                                                             xiaoright)
         return x1, y1, x2, y2
 
-    print("画画的")
 
     def paintEvent(self, event):
         global algorithm_num
@@ -387,9 +386,6 @@ class MyLabel(QLabel):
 
             painter.drawLine(int(self.x1), int(self.y1),
                              int(self.x2), int(self.y2))
-
-
-
 
 
 if __name__ == '__main__':
