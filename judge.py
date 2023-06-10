@@ -168,3 +168,51 @@ class MouseFilter(QObject):
         # print(x1, y1, x2, y2, flag, width, rate)
 
         return x1, y1, x2, y2, flag, width, rate
+    def eventFilter(self, obj, event):
+        if event.type() == QMouseEvent.MouseMove:
+            pos = event.pos()  # 获取鼠标坐标
+            if ui.w_kong < pos.x() < 1900 - 400 - ui.w_kong and ui.h_kong < pos.y() < ui.height + ui.h_kong:
+                x = int(pos.x() - ui.w_kong)
+                y = int(pos.y() - ui.h_kong)
+                # self.mx = pos.x()
+                # self.my =pos.y()
+                self.mx = x
+                self.my = y
+                # print(x, y)
+                # print(" ")
+
+                # 清除上一条直线
+                pixmap = ui.label_3.pixmap()
+                if pixmap:
+                    pixmap.fill(QtCore.Qt.transparent)
+                    ui.label_3.setPixmap(pixmap)
+                # 绘制直线
+                jpg = QtGui.QPixmap(ui.imgName)
+                ui.label_3.setPixmap(jpg)
+                label = ui.label_3
+                painter = QPainter(label.pixmap())
+                # painter.setRenderHint(QPainter.Antialiasing)
+                pen = QPen(QtCore.Qt.green)
+                pen.setWidth(3)
+                painter.setPen(pen)
+
+             
+              
+                # 设置偏移量
+              
+                # 设置偏移量
+                ui.label22.move(pos + delta2)
+                # ui.label22.setText("%s: %0.2f %s" % ("焊缝比例", rate_out*100,"%"))
+                # 如果宽度超过阈值，重置颜色为红色
+                if flag_out == False:
+                    
+                else:
+                 
+                delta1 = QtCore.QPoint(30, -20 + 50)
+                ui.label33.move(pos + delta1)
+                ui.label33.setText("%s: %d %s" % ("最小焊缝", width_out, "pixel"))
+                # 画线
+                painter.drawLine(x1, y1, x2, y2)
+                painter.end()
+                ui.label_3.update()  # 更新 ui.label_3 控件，使绘制的直线显示在界面上
+        return super().eventFilter(obj, event)
